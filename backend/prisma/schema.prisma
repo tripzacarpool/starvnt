@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  passwordHash String
+  role         Role          @default(VENDOR)
+  vendor       VendorProfile?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model VendorProfile {
+  id              String        @id @default(cuid())
+  userId          String        @unique
+  brandName       String
+  category        VendorCategory
+  city            String
+  bio             String
+  phone           String
+  priceFrom       Int
+  coverageRadius  Int
+  responseMinutes Int           @default(45)
+  rating          Float         @default(4.8)
+  isVerified      Boolean       @default(false)
+  specialties     Json
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  inquiries       Inquiry[]
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+model Inquiry {
+  id              String        @id @default(cuid())
+  vendorId        String
+  clientName      String
+  clientEmail     String
+  clientPhone     String
+  eventType       EventType
+  eventDate       DateTime
+  location        String
+  guestCount      Int
+  budget          Int
+  status          InquiryStatus @default(NEW)
+  priority        Priority      @default(MEDIUM)
+  notes           String
+  source          String        @default("Aura+")
+  vendor          VendorProfile @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+enum Role {
+  ADMIN
+  VENDOR
+}
+
+enum VendorCategory {
+  CINEMATIC_PRODUCTION
+  VENUE
+  LUXURY_GIFTING
+  FASHION_STYLING
+  MUSIC_ENTERTAINMENT
+  CORPORATE_MICE
+}
+
+enum EventType {
+  WEDDING
+  CORPORATE
+  CONCERT
+  BIRTHDAY
+  MICE
+}
+
+enum InquiryStatus {
+  NEW
+  CONTACTED
+  PROPOSAL_SENT
+  CONFIRMED
+  DECLINED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}

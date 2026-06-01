@@ -1,0 +1,912 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #0f172a;
+  color: #f8fafc;
+  --gold: #eab308;
+  --gold-soft: rgba(234, 179, 8, 0.16);
+  --star: #070b14;
+  --panel: rgba(15, 23, 42, 0.78);
+  --line: rgba(148, 163, 184, 0.22);
+  --muted: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(234, 179, 8, 0.14), transparent 30rem),
+    linear-gradient(135deg, rgba(7, 11, 20, 0.96), rgba(15, 23, 42, 0.96)),
+    url("https://picsum.photos/seed/luxurywedding/1920/1080") center/cover fixed;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  cursor: pointer;
+}
+
+.boot-screen,
+.auth-shell,
+.dashboard-shell {
+  min-height: 100vh;
+}
+
+.boot-screen {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 1.25rem;
+  background: rgba(7, 11, 20, 0.9);
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+  color: var(--gold);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.brand-mark {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.brand-mark strong {
+  color: var(--gold);
+}
+
+.brand-mark span {
+  color: #fff;
+}
+
+.eyebrow,
+.console-label {
+  color: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.auth-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.75fr);
+  background: rgba(7, 11, 20, 0.78);
+}
+
+.auth-hero {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.25rem, 4vw, 4rem);
+}
+
+.mini-nav,
+.topbar,
+.section-toolbar,
+.panel-heading,
+.inquiry-row,
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.mini-nav small {
+  border: 1px solid rgba(234, 179, 8, 0.4);
+  border-radius: 4px;
+  color: var(--gold);
+  padding: 0.4rem 0.7rem;
+}
+
+.hero-copy {
+  max-width: 740px;
+}
+
+.hero-copy h1,
+.hero-dashboard h2,
+.section-toolbar h2,
+.topbar h1 {
+  margin: 0.5rem 0;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 0.98;
+}
+
+.hero-copy h1 {
+  font-size: clamp(2.6rem, 7vw, 6.5rem);
+}
+
+.hero-copy p,
+.hero-dashboard p {
+  color: #cbd5e1;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  line-height: 1.7;
+}
+
+.launch-card,
+.aura-card,
+.verified-box {
+  border: 1px solid var(--line);
+  background: rgba(15, 23, 42, 0.74);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+.launch-card {
+  display: flex;
+  max-width: 430px;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.launch-card svg,
+.aura-card svg,
+.verified-box svg,
+.verified-inline svg {
+  color: var(--gold);
+}
+
+.launch-card span,
+.stat-card span,
+.inquiry-row span,
+.aura-card p {
+  color: var(--muted);
+}
+
+.auth-panel {
+  align-self: center;
+  margin: 1rem;
+  border: 1px solid var(--line);
+  background: rgba(7, 11, 20, 0.88);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-shadow: 0 24px 90px rgba(0, 0, 0, 0.45);
+}
+
+.auth-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 1.4rem;
+}
+
+.auth-tabs button,
+.sidebar nav button {
+  border: 1px solid transparent;
+  background: transparent;
+  color: #cbd5e1;
+  padding: 0.8rem 1rem;
+  text-align: left;
+}
+
+.auth-tabs button {
+  text-align: center;
+}
+
+.auth-tabs button.active,
+.sidebar nav button.active {
+  border-color: rgba(234, 179, 8, 0.55);
+  background: var(--gold-soft);
+  color: var(--gold);
+}
+
+.form-stack,
+.profile-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-grid,
+.stats-grid,
+.content-grid,
+.profile-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+label {
+  display: grid;
+  gap: 0.45rem;
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: rgba(15, 23, 42, 0.78);
+  color: #fff;
+  padding: 0.85rem 0.9rem;
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.12);
+}
+
+.gold-button,
+.ghost-button,
+.card-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 3px;
+  border: 1px solid var(--gold);
+  padding: 0.9rem 1.1rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.gold-button {
+  background: var(--gold);
+  color: #111827;
+  box-shadow: 0 0 28px rgba(234, 179, 8, 0.24);
+}
+
+.ghost-button,
+.card-actions a {
+  background: rgba(15, 23, 42, 0.65);
+  color: var(--gold);
+}
+
+.form-error {
+  margin: 0;
+  color: #fecaca;
+}
+
+.success-message {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #86efac;
+}
+
+.dashboard-shell {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  background: rgba(7, 11, 20, 0.9);
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  border-right: 1px solid var(--line);
+  background: rgba(7, 11, 20, 0.92);
+  padding: 1.25rem;
+}
+
+.sidebar-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.sidebar-close,
+.sidebar-backdrop {
+  display: none;
+}
+
+.sidebar nav {
+  display: grid;
+  gap: 0.6rem;
+  margin: 2rem 0;
+}
+
+.sidebar nav button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  min-height: 50px;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.sidebar nav button svg {
+  flex: 0 0 22px;
+}
+
+.aura-card,
+.verified-box,
+.panel,
+.stat-card,
+.inquiry-card {
+  border-radius: 8px;
+}
+
+.aura-card {
+  padding: 1rem;
+}
+
+.aura-card span {
+  display: block;
+  color: var(--gold);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.4rem;
+  font-weight: 800;
+}
+
+.dashboard-main {
+  min-width: 0;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 4;
+  margin: -1rem -1rem 1rem;
+  border-bottom: 1px solid var(--line);
+  background: rgba(7, 11, 20, 0.88);
+  padding: 1rem;
+  backdrop-filter: blur(16px);
+}
+
+.topbar h1,
+.section-toolbar h2 {
+  font-size: clamp(1.8rem, 3vw, 3rem);
+}
+
+.menu-button {
+  display: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.8);
+  color: #fff;
+  padding: 0.7rem;
+}
+
+.view-stack {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.hero-dashboard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 1.5rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(7, 11, 20, 0.82), rgba(15, 23, 42, 0.68)),
+    url("https://picsum.photos/seed/wedding123/1200/800") center/cover;
+  padding: clamp(1.2rem, 3vw, 2rem);
+}
+
+.hero-dashboard h2 {
+  max-width: 850px;
+  font-size: clamp(2rem, 5vw, 4.6rem);
+}
+
+.verified-box {
+  align-self: end;
+  display: grid;
+  gap: 0.4rem;
+  padding: 1rem;
+}
+
+.stats-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.stat-card,
+.panel,
+.inquiry-card {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+}
+
+.stat-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.stat-card p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.stat-card strong {
+  display: block;
+  margin: 0.35rem 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.4rem, 2vw, 2.1rem);
+}
+
+.stat-card svg {
+  color: var(--gold);
+}
+
+.content-grid {
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.75fr);
+}
+
+.panel {
+  min-width: 0;
+  padding: 1rem;
+}
+
+.lead-list {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.inquiry-row {
+  min-width: 0;
+}
+
+.inquiry-row > div:nth-child(2) {
+  min-width: 0;
+}
+
+.inquiry-row strong,
+.inquiry-row span {
+  display: block;
+}
+
+.inquiry-row span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.date-badge {
+  display: grid;
+  min-width: 64px;
+  place-items: center;
+  border: 1px solid rgba(234, 179, 8, 0.4);
+  border-radius: 8px;
+  color: var(--gold);
+  padding: 0.5rem;
+}
+
+.row-meta {
+  text-align: right;
+}
+
+.row-meta > div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+
+.pill,
+.priority,
+.verified-inline {
+  border-radius: 999px;
+  padding: 0.25rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.pill {
+  background: rgba(148, 163, 184, 0.12);
+  color: #cbd5e1;
+}
+
+.pill.confirmed {
+  background: rgba(34, 197, 94, 0.16);
+  color: #86efac;
+}
+
+.pill.proposal-sent {
+  background: rgba(234, 179, 8, 0.16);
+  color: #fde68a;
+}
+
+.pill.declined {
+  background: rgba(239, 68, 68, 0.16);
+  color: #fca5a5;
+}
+
+.priority {
+  background: rgba(59, 130, 246, 0.15);
+  color: #bfdbfe;
+}
+
+.priority.high {
+  background: rgba(236, 72, 153, 0.18);
+  color: #f9a8d4;
+}
+
+.priority.low {
+  background: rgba(20, 184, 166, 0.15);
+  color: #99f6e4;
+}
+
+.search-box {
+  position: relative;
+  min-width: min(420px, 100%);
+}
+
+.search-box svg {
+  position: absolute;
+  left: 0.8rem;
+  top: 2.45rem;
+  color: var(--muted);
+}
+
+.search-box input {
+  padding-left: 2.4rem;
+}
+
+.inquiry-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.inquiry-card {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.inquiry-card p {
+  margin: 0;
+  color: #cbd5e1;
+  line-height: 1.6;
+}
+
+.card-actions {
+  justify-content: flex-end;
+}
+
+.card-actions select {
+  max-width: 210px;
+}
+
+.profile-form {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.profile-form .wide {
+  grid-column: 1 / -1;
+}
+
+.profile-form button {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+.verified-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid rgba(234, 179, 8, 0.35);
+  color: var(--gold);
+}
+
+.setup-banner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(140px, 240px) auto;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(234, 179, 8, 0.35);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(234, 179, 8, 0.14), rgba(15, 23, 42, 0.88));
+  padding: 1rem;
+}
+
+.setup-banner strong {
+  display: block;
+  margin-top: 0.3rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.35rem;
+}
+
+.setup-banner p {
+  margin: 0.35rem 0 0;
+  color: #cbd5e1;
+}
+
+.setup-progress {
+  overflow: hidden;
+  height: 0.65rem;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.22);
+}
+
+.setup-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--gold);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  overflow: auto;
+  background: rgba(2, 6, 23, 0.82);
+  padding: 1rem;
+  backdrop-filter: blur(12px);
+}
+
+.setup-modal {
+  position: relative;
+  width: min(920px, 100%);
+  border: 1px solid rgba(234, 179, 8, 0.32);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(7, 11, 20, 0.98)),
+    url("https://picsum.photos/seed/corp55/600/400") center/cover;
+  box-shadow: 0 28px 120px rgba(0, 0, 0, 0.55);
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.modal-close {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.setup-modal h2 {
+  margin: 0.4rem 0 0.65rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.8rem, 4vw, 3.4rem);
+  line-height: 1;
+}
+
+.setup-modal p {
+  max-width: 760px;
+  color: #cbd5e1;
+  line-height: 1.65;
+}
+
+.setup-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.setup-form .wide,
+.setup-form .form-error,
+.setup-form button {
+  grid-column: 1 / -1;
+}
+
+.setup-form button {
+  justify-self: start;
+}
+
+@media (max-width: 1080px) {
+  .auth-shell,
+  .dashboard-shell,
+  .hero-dashboard,
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-hero {
+    min-height: auto;
+    gap: 3rem;
+  }
+
+  .sidebar {
+    position: fixed;
+    z-index: 10;
+    width: min(320px, 86vw);
+    padding: 1rem;
+    transform: translateX(-105%);
+    transition: transform 0.2s ease;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9;
+    display: block;
+    border: 0;
+    background: rgba(2, 6, 23, 0.62);
+    backdrop-filter: blur(3px);
+  }
+
+  .sidebar-close {
+    display: grid;
+    flex: 0 0 auto;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.9);
+    color: #fff;
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .sidebar nav {
+    margin: 1.5rem 0;
+  }
+
+  .sidebar nav button {
+    padding: 0.85rem 1rem;
+  }
+
+  .aura-card {
+    padding: 1rem;
+  }
+
+  .menu-button {
+    display: inline-flex;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .dashboard-main {
+    padding: 0.75rem;
+  }
+
+  .auth-panel {
+    margin: 0;
+    border-left: 0;
+    border-right: 0;
+  }
+
+  .form-grid,
+  .stats-grid,
+  .profile-form {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar,
+  .section-toolbar,
+  .card-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .topbar {
+    margin: -0.75rem -0.75rem 0.75rem;
+  }
+
+  .topbar h1,
+  .section-toolbar h2 {
+    overflow-wrap: anywhere;
+  }
+
+  .hero-dashboard,
+  .panel,
+  .stat-card,
+  .inquiry-card {
+    padding: 0.85rem;
+  }
+
+  .inquiry-row {
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .inquiry-row .row-meta {
+    grid-column: 1 / -1;
+    padding-top: 0.65rem;
+  }
+
+  .ghost-button,
+  .card-actions a,
+  .card-actions select,
+  .profile-form button {
+    width: 100%;
+  }
+
+  .row-meta {
+    text-align: left;
+  }
+
+  .row-meta > div {
+    justify-content: flex-start;
+  }
+
+  .profile-form {
+    padding: 1rem;
+  }
+
+  .setup-banner {
+    grid-template-columns: 1fr;
+  }
+
+  .setup-form {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-form label {
+    gap: 0.6rem;
+    min-width: 0;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+  }
+
+  .profile-form input,
+  .profile-form select,
+  .profile-form textarea {
+    min-width: 0;
+    border-radius: 8px;
+    padding: 0.95rem;
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .profile-form textarea {
+    resize: vertical;
+  }
+
+  .verified-inline {
+    justify-content: center;
+  }
+
+  .setup-modal {
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+  }
+
+  .setup-form button {
+    width: 100%;
+  }
+}

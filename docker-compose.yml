@@ -1,0 +1,28 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      DATABASE_URL: file:/app/backend/prisma/dev.db
+      JWT_SECRET: change-this-before-production
+      PORT: 4000
+      CLIENT_ORIGIN: http://localhost:5173
+    ports:
+      - "4000:4000"
+    volumes:
+      - backend-data:/app/backend/prisma
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        VITE_API_URL: http://localhost:4000
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
+volumes:
+  backend-data:
