@@ -4,14 +4,27 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     environment:
-      DATABASE_URL: file:/app/backend/prisma/dev.db
-      JWT_SECRET: change-this-before-production
-      PORT: 4000
-      CLIENT_ORIGIN: http://localhost:5173
+      DATABASE_URL: ${DATABASE_URL:-file:/data/starvnt.db}
+      JWT_SECRET: ${JWT_SECRET:-change-this-before-production}
+      PORT: ${PORT:-4000}
+      CLIENT_ORIGIN: ${CLIENT_ORIGIN:-http://localhost:5173}
     ports:
       - "4000:4000"
     volumes:
-      - backend-data:/app/backend/prisma
+      - backend-data:/data
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - backend
 
   frontend:
     build:
@@ -26,3 +39,5 @@ services:
 
 volumes:
   backend-data:
+  caddy-data:
+  caddy-config:

@@ -36,6 +36,7 @@ npm run dev
 
 Frontend: `http://localhost:5173`
 Backend: `http://localhost:4000`
+Live backend: `https://34.228.223.158.sslip.io`
 
 ## API Overview
 
@@ -98,13 +99,24 @@ Build and run the backend Docker image on EC2:
 ```bash
 docker build -f backend/Dockerfile -t starvnt-vendor-api .
 docker run -p 4000:4000 \
-  -e DATABASE_URL="file:/app/backend/prisma/dev.db" \
+  -e DATABASE_URL="file:/data/starvnt.db" \
   -e JWT_SECRET="replace-with-production-secret" \
   -e CLIENT_ORIGIN="https://your-amplify-domain.amplifyapp.com" \
+  -v starvnt-data:/data \
   starvnt-vendor-api
 ```
 
 For a production deployment, switch `DATABASE_URL` to PostgreSQL/MySQL and replace `prisma db push` with migration deployment.
+
+## Free Backend Domain
+
+The included `Caddyfile` exposes the backend through a free `sslip.io` DNS name:
+
+```txt
+https://34.228.223.158.sslip.io
+```
+
+`sslip.io` resolves the IP address embedded in the hostname, and Caddy provisions HTTPS automatically. The EC2 security group must allow inbound TCP `80` and `443` for certificate issuance and browser traffic.
 
 ## CI/CD
 

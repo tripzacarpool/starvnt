@@ -1,6 +1,8 @@
 import type { Analytics, Inquiry, InquiryStatus, User, VendorProfile } from './types';
 
-const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:4000';
+const API_URL =
+  import.meta.env.VITE_API_URL ??
+  (import.meta.env.DEV ? 'http://localhost:4000' : 'https://34.228.223.158.sslip.io');
 
 export const tokenStore = {
   get: () => localStorage.getItem('starvnt_token'),

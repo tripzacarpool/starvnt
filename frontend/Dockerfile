@@ -10,7 +10,6 @@ WORKDIR /app
 ARG VITE_API_URL
 ENV VITE_API_URL=$VITE_API_URL
 COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/frontend/node_modules ./frontend/node_modules
 COPY package.json ./
 COPY frontend ./frontend
 RUN npm run build --workspace frontend
