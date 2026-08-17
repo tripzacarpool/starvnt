@@ -20,7 +20,7 @@ import {
   registerSchema,
 } from "./validators.js";
 
-const app = express();
+export const app = express();
 
 // `helmet`'s type definitions may not expose a callable signature in some setups.
 // Cast to `any` to ensure the middleware is applied at runtime without TS errors.
@@ -292,16 +292,22 @@ app.use(
   },
 );
 
-connectDb()
-  .then(() => {
+export async function start() {
+  try {
+    await connectDb();
     app.listen(env.port, () => {
       console.log(`StarVNT vendor API listening on :${env.port}`);
     });
-  })
-  .catch((err) => {
+  } catch (err) {
     console.error("Failed to connect to DB", err);
     process.exit(1);
-  });
+  }
+}
+
+// When running the backend directly (e.g. `npm run start`) set RUN_DIRECT=1
+if (process.env.RUN_DIRECT === "1") {
+  start();
+}
 
 function publicUser(user: {
   id: string;
