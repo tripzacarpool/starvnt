@@ -293,14 +293,27 @@ app.use(
 );
 
 export async function start() {
-  try {
-    await connectDb();
-    app.listen(env.port, () => {
-      console.log(`StarVNT vendor API listening on :${env.port}`);
-    });
-  } catch (err) {
-    console.error("Failed to connect to DB", err);
-    process.exit(1);
+  const maxAttempts = 5;
+  const retryDelayMs = 5000;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      await connectDb();
+      console.log("Connected to database");
+      app.listen(env.port, () => {
+        console.log(`StarVNT vendor API listening on :${env.port}`);
+      });
+      return;
+    } catch (err) {
+      console.error(`Database connection attempt ${attempt} failed:`, err);
+      if (attempt < maxAttempts) {
+        console.log(`Retrying in ${retryDelayMs / 1000}s...`);
+        await new Promise((r) => setTimeout(r, retryDelayMs));
+      } else {
+        console.error(`Failed to connect to DB after ${maxAttempts} attempts`);
+        process.exit(1);
+      }
+    }
   }
 }
 
