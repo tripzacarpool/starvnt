@@ -22,7 +22,9 @@ import {
 
 const app = express();
 
-app.use(helmet());
+// `helmet`'s type definitions may not expose a callable signature in some setups.
+// Cast to `any` to ensure the middleware is applied at runtime without TS errors.
+app.use((helmet as unknown as any)());
 app.use(cors({ origin: env.clientOrigin, credentials: true }));
 app.use(express.json());
 app.use(morgan("dev"));
