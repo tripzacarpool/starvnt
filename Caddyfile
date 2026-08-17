@@ -1,0 +1,22 @@
+34.228.223.158.sslip.io {
+  encode gzip zstd
+
+  # Proxy API requests to the backend service (Docker service name or host)
+  @api path /api/*
+  reverse_proxy @api http://backend:4000
+
+  # Health endpoint
+  handle /health {
+    reverse_proxy http://backend:4000
+  }
+
+  # Default response for root
+  handle {
+    respond "StarVNT backend API is running" 200
+  }
+
+  log {
+    output file /var/log/caddy/access.log
+    format single_field common_log
+  }
+}
