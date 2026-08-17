@@ -61,7 +61,7 @@ This keeps vendor identity, public profile data, and booking pipeline data separ
 Backend:
 
 ```txt
-DATABASE_URL="mongodb://localhost:27017/starvnt"
+DATABASE_URL="mongodb://127.0.0.1:27017/starvnt"
 JWT_SECRET="replace-with-a-long-random-secret"
 PORT=4000
 CLIENT_ORIGIN="http://localhost:5173"

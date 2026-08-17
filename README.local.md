@@ -16,10 +16,10 @@ Verify:
 
 ```bash
 # backend health
-curl -i http://localhost/health
-
-# API health through the API prefix
 curl -i http://localhost/api/health
+
+# API sample
+curl -i http://localhost/api/some-endpoint
 ```
 
 Notes:
@@ -36,6 +36,5 @@ node dist/src/server.js
 ```
 
 Production notes:
-- Ensure `DATABASE_URL` is set in your hosting environment (Render, Heroku, etc.) to a valid MongoDB connection string, for example `mongodb+srv://...`.
+- Ensure `DATABASE_URL` is set in your hosting environment (Render, Heroku, etc.) to a valid MongoDB connection string (for example `mongodb://user:pass@host:27017/starvnt`). If `DATABASE_URL` is not set, the server's default is `file:./dev.db` which is not a MongoDB URL and will cause startup failures.
 - The Dockerfile now sets `RUN_DIRECT=1` so the container will call the server's `start()` entrypoint automatically.
-- For Render, use the included `render.yaml`, set `DATABASE_URL` to MongoDB Atlas, and keep `CLIENT_ORIGIN=https://starvnt-frontend.vercel.app`.
