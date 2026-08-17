@@ -1,9 +1,11 @@
 services:
   - name: starvnt-backend
     type: web
-    env: docker
-    dockerfilePath: backend/Dockerfile
+    env: node
     branch: main
+    root: backend
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
     healthCheckPath: /health
     plan: free
     envVars:
