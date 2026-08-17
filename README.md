@@ -92,7 +92,7 @@ The compose setup builds both apps. Configure `DATABASE_URL` when running contai
 The frontend is already ready for Vercel. In the Vercel project settings, set:
 
 ```txt
-VITE_API_URL="https://your-render-backend.onrender.com"
+VITE_API_URL="https://starvnt-1.onrender.com"
 ```
 
 Then redeploy the frontend so Vite bakes the Render API URL into the production bundle.

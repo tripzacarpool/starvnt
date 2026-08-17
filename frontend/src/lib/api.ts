@@ -8,7 +8,9 @@ import type {
 
 const API_URL =
   import.meta.env.VITE_API_URL ??
-  (import.meta.env.DEV ? "http://localhost:4000" : window.location.origin);
+  (import.meta.env.DEV
+    ? "http://localhost:4000"
+    : "https://starvnt-1.onrender.com");
 
 export const tokenStore = {
   get: () => localStorage.getItem("starvnt_token"),
