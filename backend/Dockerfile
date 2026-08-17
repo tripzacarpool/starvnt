@@ -6,7 +6,8 @@ WORKDIR /app
 COPY package*.json ./
 COPY tsconfig*.json ./
 COPY src ./src
-RUN npm ci
+# `npm ci` requires a lockfile; use plain `npm install` in the builder to support monorepos
+RUN npm install
 RUN npm run build
 
 FROM node:18
@@ -14,7 +15,8 @@ WORKDIR /app
 
 # Only production dependencies
 COPY package*.json ./
-RUN npm ci --only=production
+# Install production dependencies. Use `npm install --production` to avoid failing when no lockfile exists.
+RUN npm install --production --no-audit --no-fund
 
 # Copy built artifacts
 COPY --from=builder /app/dist ./dist
