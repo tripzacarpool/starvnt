@@ -1,15 +1,18 @@
-FROM node:22-alpine
+FROM node:22-alpine AS deps
+WORKDIR /app/backend
+COPY backend/package.json backend/package-lock.json* ./
+RUN npm ci
 
-WORKDIR /app
-ENV NODE_ENV=production
-
-# Install production dependencies
-COPY package.json package-lock.json* ./
-RUN npm ci --omit=dev
-
-# Copy source and build
-COPY . .
+FROM node:22-alpine AS builder
+WORKDIR /app/backend
+COPY --from=deps /app/backend/node_modules ./node_modules
+COPY backend/ ./
 RUN npm run build
 
+FROM node:22-alpine AS runner
+WORKDIR /app/backend
+ENV NODE_ENV=production
+COPY --from=builder /app/backend/dist ./dist
+COPY --from=deps /app/backend/node_modules ./node_modules
 EXPOSE 4000
 CMD ["node", "dist/src/server.js"]
