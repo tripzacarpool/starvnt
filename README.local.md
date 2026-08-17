@@ -16,10 +16,10 @@ Verify:
 
 ```bash
 # backend health
-curl -i http://localhost/api/health
+curl -i http://localhost/health
 
-# API sample
-curl -i http://localhost/api/some-endpoint
+# API health through the API prefix
+curl -i http://localhost/api/health
 ```
 
 Notes:
@@ -34,3 +34,8 @@ npm ci
 npm run build
 node dist/src/server.js
 ```
+
+Production notes:
+- Ensure `DATABASE_URL` is set in your hosting environment (Render, Heroku, etc.) to a valid MongoDB connection string, for example `mongodb+srv://...`.
+- The Dockerfile now sets `RUN_DIRECT=1` so the container will call the server's `start()` entrypoint automatically.
+- For Render, use the included `render.yaml`, set `DATABASE_URL` to MongoDB Atlas, and keep `CLIENT_ORIGIN=https://starvnt-frontend.vercel.app`.

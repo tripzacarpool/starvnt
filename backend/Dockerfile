@@ -22,6 +22,7 @@ RUN npm install --production --no-audit --no-fund
 COPY --from=builder /app/dist ./dist
 
 ENV NODE_ENV=production
+ENV RUN_DIRECT=1
 EXPOSE 4000
 
 CMD ["node", "dist/src/server.js"]

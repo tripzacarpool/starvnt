@@ -25,13 +25,28 @@ export const app = express();
 // `helmet`'s type definitions may not expose a callable signature in some setups.
 // Cast to `any` to ensure the middleware is applied at runtime without TS errors.
 app.use((helmet as unknown as any)());
-app.use(cors({ origin: env.clientOrigin, credentials: true }));
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin || env.clientOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error(`Origin ${origin} is not allowed by CORS`));
+    },
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(morgan("dev"));
 
-app.get("/health", (_req, res) => {
+function health(_req: express.Request, res: express.Response) {
   res.json({ ok: true, service: "starvnt-vendor-api" });
-});
+}
+
+app.get("/health", health);
+app.get("/api/health", health);
 
 app.post("/api/auth/register", async (req, res, next) => {
   try {

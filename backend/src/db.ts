@@ -54,8 +54,6 @@ export type InquiryDoc = {
 export async function connectDb() {
   if (database) return database;
   await client.connect();
-  const dbName =
-    new URL(env.databaseUrl).searchParams.get("authSource") || "starvnt";
   // If connection string contains a default db, use that instead
   try {
     const parsed = new URL(env.databaseUrl);

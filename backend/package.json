@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "main": "dist/src/server.js",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "cross-env RUN_DIRECT=1 NODE_NO_WARNINGS=1 tsx watch src/server.ts",
     "build": "tsc",
