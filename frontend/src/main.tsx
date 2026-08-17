@@ -5,6 +5,10 @@ import { App } from './App';
 import { AuthProvider } from './context/AuthContext';
 import './styles.css';
 
+if (/^\/https?:\/\//i.test(window.location.pathname)) {
+  window.history.replaceState(null, '', '/');
+}
+
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

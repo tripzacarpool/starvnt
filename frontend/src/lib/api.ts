@@ -6,11 +6,9 @@ import type {
   VendorProfile,
 } from "./types";
 
-const API_URL =
-  import.meta.env.VITE_API_URL ??
-  (import.meta.env.DEV
-    ? "http://localhost:4000"
-    : "https://starvnt-1.onrender.com");
+const RENDER_API_URL = "https://starvnt-1.onrender.com";
+
+const API_URL = resolveApiUrl(import.meta.env.VITE_API_URL);
 
 export const tokenStore = {
   get: () => localStorage.getItem("starvnt_token"),
@@ -80,3 +78,19 @@ export const categoryLabels: Record<string, string> = {
   MUSIC_ENTERTAINMENT: "Music & Entertainment",
   CORPORATE_MICE: "Corporate MICE",
 };
+
+function resolveApiUrl(configuredUrl?: string) {
+  if (import.meta.env.DEV) return configuredUrl?.trim() || "http://localhost:4000";
+
+  const trimmedUrl = configuredUrl?.trim();
+  if (!trimmedUrl) return RENDER_API_URL;
+
+  try {
+    const url = new URL(trimmedUrl);
+    if (url.hostname === window.location.hostname) return RENDER_API_URL;
+    if (url.hostname.includes("starvnt-frontend.vercel.app")) return RENDER_API_URL;
+    return url.origin;
+  } catch {
+    return RENDER_API_URL;
+  }
+}
