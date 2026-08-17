@@ -85,21 +85,34 @@ The compose setup builds both apps. Configure `DATABASE_URL` when running contai
 
 The frontend is a Vite React app and can be deployed to Vercel or Netlify. Configure the environment variable `VITE_API_URL` to point to your backend URL in the hosting provider's settings.
 
-## Backend hosting
+## Backend hosting (no Docker required)
 
-Build and run the backend Docker image on EC2:
+Option 1 — Native Node (recommended if you don't want Docker)
+
+- Root Directory (for hosts like Render): `backend`
+- Build Command: `npm ci && npm run build`
+- Start Command: `node dist/src/server.js` (or use `npm run start`)
+- Env vars to set in the host UI:
+  - `DATABASE_URL` (MongoDB connection string)
+  - `JWT_SECRET` (strong secret)
+  - `CLIENT_ORIGIN` (frontend URL for CORS)
+  - `PORT` (optional — default 4000)
+
+Option 2 — Docker (optional)
+
+If you prefer Docker (existing `backend/Dockerfile`), build/run as follows from repo root:
 
 ```bash
 docker build -f backend/Dockerfile -t starvnt-vendor-api .
 docker run -p 4000:4000 \
   -e DATABASE_URL="file:/data/starvnt.db" \
   -e JWT_SECRET="replace-with-production-secret" \
-  -e CLIENT_ORIGIN="https://your-amplify-domain.amplifyapp.com" \
+  -e CLIENT_ORIGIN="https://your-frontend-domain" \
   -v starvnt-data:/data \
   starvnt-vendor-api
 ```
 
-For production, set `DATABASE_URL` to a managed MongoDB connection (Atlas) or another production datastore and configure secrets in your host provider.
+For production, set `DATABASE_URL` to a managed MongoDB connection (Atlas) and configure secrets in your host provider.
 
 ## CI/CD
 
