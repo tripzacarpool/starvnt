@@ -1,4 +1,4 @@
-34.228.223.158.sslip.io {
+:80 {
   encode gzip zstd
 
   # Proxy API requests to the backend service (Docker service name or host)
