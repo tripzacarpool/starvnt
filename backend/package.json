@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
-    "start": "node dist/src/server.js",
+    "start": "RUN_DIRECT=1 node dist/src/server.js",
     "lint": "tsc --noEmit",
     "seed": "tsx src/seed.ts"
   },
