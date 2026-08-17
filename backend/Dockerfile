@@ -9,7 +9,7 @@ FROM node:22-alpine AS build
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY package.json ./
-COPY backend ./backend
+# COPY backend ./backend
 RUN npm run build --workspace backend
 
 FROM node:22-alpine
