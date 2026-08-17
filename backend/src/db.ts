@@ -1,7 +1,8 @@
 import { MongoClient, Db, Collection, ObjectId } from "mongodb";
 import { env } from "./env.js";
 
-const client = new MongoClient(env.databaseUrl);
+const databaseUrl = normalizeDatabaseUrl(env.databaseUrl);
+const client = new MongoClient(databaseUrl);
 let database: Db | null = null;
 
 export type UserDoc = {
@@ -56,7 +57,7 @@ export async function connectDb() {
   await client.connect();
   // If connection string contains a default db, use that instead
   try {
-    const parsed = new URL(env.databaseUrl);
+    const parsed = new URL(databaseUrl);
     if (parsed.pathname && parsed.pathname !== "/") {
       const name = parsed.pathname.replace("/", "");
       database = client.db(name || "starvnt");
@@ -86,4 +87,18 @@ export function makeId() {
 export async function disconnectDb() {
   await client.close();
   database = null;
+}
+
+function normalizeDatabaseUrl(url: string) {
+  if (!url.startsWith("mongodb://")) return url;
+  if (!url.includes(".mongodb.net")) return url;
+
+  const parsed = new URL(url);
+  parsed.searchParams.set("tls", "true");
+  parsed.searchParams.set(
+    "retryWrites",
+    parsed.searchParams.get("retryWrites") ?? "true",
+  );
+  parsed.searchParams.set("w", parsed.searchParams.get("w") ?? "majority");
+  return parsed.toString();
 }
