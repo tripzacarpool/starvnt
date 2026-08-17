@@ -6,3 +6,5 @@ dist
 *.db-journal
 coverage
 .DS_Store
+package-lock.json
+npm-debug.log
