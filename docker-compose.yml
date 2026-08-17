@@ -12,20 +12,6 @@ services:
       - "4000:4000"
     volumes:
       - backend-data:/data
-
-  caddy:
-    image: caddy:2-alpine
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy-data:/data
-      - caddy-config:/config
-    depends_on:
-      - backend
-
   frontend:
     build:
       context: .
@@ -39,5 +25,3 @@ services:
 
 volumes:
   backend-data:
-  caddy-data:
-  caddy-config:

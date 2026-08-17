@@ -6,7 +6,7 @@ Production-minded assessment project for StarVNT: a responsive vendor booking da
 
 - Frontend: React + TypeScript + Vite, React Query, Recharts, Lucide icons
 - Backend: Node.js + Express + TypeScript
-- Database: Prisma ORM with SQLite for fast local review
+- Database: MongoDB (used in this repo for direct access)
 - Auth: JWT bearer tokens with bcrypt password hashing
 - Deployment shape: frontend can be hosted on AWS Amplify; backend can run on EC2 with Docker
 
@@ -28,15 +28,13 @@ Password: Starvnt@2026
 ```bash
 npm install
 cp backend/.env.example backend/.env
-npm run prisma:generate --workspace backend
-npm run prisma:migrate --workspace backend -- --name init
-npm run seed
+# set DATABASE_URL in backend/.env to your MongoDB connection string
+npm run seed --workspace backend
 npm run dev
 ```
 
 Frontend: `http://localhost:5173`
 Backend: `http://localhost:4000`
-Live backend: `https://34.228.223.158.sslip.io`
 
 ## API Overview
 
@@ -81,18 +79,13 @@ VITE_API_URL="http://localhost:4000"
 docker compose up --build
 ```
 
-The compose setup builds both apps. The backend container runs Prisma `db push` on boot so a fresh EC2 volume can initialize itself for review/demo environments.
+The compose setup builds both apps. Configure `DATABASE_URL` when running containers in production.
 
-## AWS Amplify Frontend
+## Frontend hosting
 
-An `amplify.yml` file is included at the repository root. In Amplify:
+The frontend is a Vite React app and can be deployed to Vercel or Netlify. Configure the environment variable `VITE_API_URL` to point to your backend URL in the hosting provider's settings.
 
-- App root: repository root
-- Build command: handled by `amplify.yml`
-- Artifact directory: `frontend/dist`
-- Environment variable: `VITE_API_URL=https://your-api-domain.com`
-
-## EC2 Backend
+## Backend hosting
 
 Build and run the backend Docker image on EC2:
 
@@ -106,21 +99,11 @@ docker run -p 4000:4000 \
   starvnt-vendor-api
 ```
 
-For a production deployment, switch `DATABASE_URL` to PostgreSQL/MySQL and replace `prisma db push` with migration deployment.
-
-## Free Backend Domain
-
-The included `Caddyfile` exposes the backend through a free `sslip.io` DNS name:
-
-```txt
-https://34.228.223.158.sslip.io
-```
-
-`sslip.io` resolves the IP address embedded in the hostname, and Caddy provisions HTTPS automatically. The EC2 security group must allow inbound TCP `80` and `443` for certificate issuance and browser traffic.
+For production, set `DATABASE_URL` to a managed MongoDB connection (Atlas) or another production datastore and configure secrets in your host provider.
 
 ## CI/CD
 
-GitHub Actions CI is included in `.github/workflows/ci.yml`. It installs dependencies, generates Prisma Client, builds frontend/backend, and verifies both Docker images build successfully. Amplify can deploy the frontend automatically on pushes to the connected branch. Backend deployment can be connected to EC2 through your preferred pipeline step, such as SSH deploy, CodeDeploy, or ECR + ECS/EC2 pull.
+You can deploy the frontend to Vercel/Netlify and the backend to Render/ECS/EC2. CI should install dependencies, build both apps, and push Docker images if using container-based deployment.
 
 ## Production Considerations
 
